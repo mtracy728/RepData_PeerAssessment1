@@ -7,19 +7,51 @@ output:
 
 
 ## Loading and preprocessing the data
+The dataset of interest consists of activity data collected at five minute
+intervals during October and November 2012 from an anonymous individual. The
+data are in .csv form and include 17,568 observations.
 
+Here we load the R packages we want to use to manage and analyze the data, and
+import the data file.
+
+```{r import}
+```
 
 
 ## What is mean total number of steps taken per day?
+Here we calculate the total number of steps taken per day, make a histogram of
+the total number of steps, and calculate the mean and median of the total number
+of steps per day.
 
+The mean number of steps taken per day was .
+The median number of steps taken per day was .
 
 
 ## What is the average daily activity pattern?
+Here we calculate the average number of steps taken in each five minute interval
+across all days, and display it using a time series plot.
 
+On average across all the days in the dataset, the 5-minute interval that
+contains the maximum number of steps was .
 
 
 ## Imputing missing values
+Here we calculate the total number of missing values in the dataset. We then 
+impute missing values using the . Finally, we display a histogram of the total
+number of steps taken per day, using the imputed data, and report the mean and
+median of the total number of steps taken per day.
 
+Using the imputed data, the mean number of steps taken per day was .
+Using the imputed data, the median number of steps taken per day was .
+
+As illustrated above, the mean and median number of steps taken per day was X
+when using the imputed data, and the total daily number of steps was X.
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
+Here we investigate whether activity patterns vary for weekdays vs. weekends. 
+We create a new factor variable to identify weekdays vs. weekend days and
+create a panel plot to show the daily activity patterns for weekdays vs.
+weekend days.
+
+As shown in the plot above, BLAH BLAH BLAH.

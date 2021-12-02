@@ -5,7 +5,6 @@ output:
     keep_md: true
 ---
 
-
 ## Loading and preprocessing the data
 The dataset of interest consists of activity data collected at five minute
 intervals during October and November 2012 from an anonymous individual. The
@@ -14,25 +13,59 @@ data are in .csv form and include 17,568 observations.
 Here we load the R packages we want to use to manage and analyze the data, and
 import the data file.
 
-```{r import}
+```{r import, warning=F}
+library(tidyverse)
+unzip("C:/Work/Templates/GitHub-Repositories/RepData_PeerAssessment1/activity.zip")
+act_data <- read.csv("C:/Work/Templates/GitHub-Repositories/RepData_PeerAssessment1/activity.csv", header=T)
+names(act_data)
+head(act_data)
+dim(act_data)
 ```
-
 
 ## What is mean total number of steps taken per day?
 Here we calculate the total number of steps taken per day, make a histogram of
 the total number of steps, and calculate the mean and median of the total number
 of steps per day.
 
-The mean number of steps taken per day was .
-The median number of steps taken per day was .
+```{r steps}
+
+# calculate total number of steps per day
+act_bydate <- act_data %>% group_by(date) 
+tot_bydate <- act_bydate %>% summarise(totsteps = sum(steps, na.rm=T))
+
+# histogram of total number of steps per day
+hist1 <- ggplot(tot_bydate, aes(x=totsteps)) + geom_histogram(color="black", fill="blue",bins=30)
+# add title and axis labels
+hist1 + ggtitle("Distribution of total number of steps per day in Oct-Nov 2012") + labs(y = "Number of days", x = "Total number of steps per day")
+
+```
+
+The mean number of steps taken per day was `r mean(tot_bydate$totsteps)`.
+The median number of steps taken per day was `r median(tot_bydate$totsteps)`.
 
 
 ## What is the average daily activity pattern?
 Here we calculate the average number of steps taken in each five minute interval
 across all days, and display it using a time series plot.
 
+```{r daily}
+
+# calculate average number of steps per interval across all days
+act_byint <- act_data %>% group_by(interval) 
+avg_byint <- act_byint %>% summarise(avgsteps = mean(steps, na.rm=T))
+
+# identify interval with the maximum number of steps
+max_int <- avg_byint %>% filter(avgsteps == max(avgsteps))
+
+# plot time series of average daily activity pattern
+time1 <- ggplot(avg_byint, aes(x=interval, y=avgsteps)) + geom_line()
+# add title and axis labels
+time1 + ggtitle("Average daily activity pattern in Oct-Nov 2012") + xlab("Five minute interval during the day") + ylab("Average number of steps in interval")
+
+```
+
 On average across all the days in the dataset, the 5-minute interval that
-contains the maximum number of steps was .
+contains the maximum number of steps was interval number `r max_int$interval`.
 
 
 ## Imputing missing values
